@@ -16,11 +16,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Role {
-@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  Integer id;
 
-@Column(name="roleName")
-private String roleName;
+    @Column(name="roleName")
+    @Enumerated(EnumType.STRING)
+    private RoleName roleName;
 
 }

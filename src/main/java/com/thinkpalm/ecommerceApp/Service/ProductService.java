@@ -36,6 +36,7 @@ public class ProductService {
         this.customerRepo = customerRepo;
         this.catRepo=catRepo;
     }
+
     public List<Product> getAllProducts() {
         return productRepo.findAll();
     }
@@ -43,28 +44,10 @@ public class ProductService {
         Product prod=productRepo.findById(productId).orElse(null);
         return prod;
     }
-    public void deleteProduct(Integer productId) {
-        productRepo.deleteById(productId);
-    }
-    public Product updateProduct(Integer productId,CreateProductRequest newproduct) {
-        Product oldProduct=productRepo.findById(productId).orElse(null);
-        oldProduct.setImage(newproduct.getImage()!=null ?  newproduct.getImage() : oldProduct.getImage());
-        oldProduct.setTitle(newproduct.getTitle()!=null ?  newproduct.getTitle() : oldProduct.getTitle());
-        oldProduct.setDescription(newproduct.getDescription()!=null ?  newproduct.getDescription() : oldProduct.getDescription());
-        oldProduct.setPrice(newproduct.getPrice()!=null ?  newproduct.getPrice() : oldProduct.getPrice());
-        if(newproduct.getCategory_id()!=null){
-            oldProduct.setCategory(catRepo.findById(newproduct.getCategory_id()).orElse(oldProduct.getCategory()));
-        }else{
-            oldProduct.setCategory(oldProduct.getCategory());
-        }
-        oldProduct.setQuantity(newproduct.getQuantity()!=null ?  newproduct.getQuantity() : oldProduct.getQuantity());
-        oldProduct.setModified_at(Timestamp.valueOf(LocalDateTime.now()));
-        Product save=productRepo.save(oldProduct);
-        return  save;
-    }
     public String getImageRelativePath(Integer postId) {
         return "/Users/arathy.h/Downloads/ecommerce-website";
     }
+
 
     //OPERATIONS IN CART
     public String addProductToCart(Integer prodId,Integer quantity) {
@@ -99,6 +82,7 @@ public class ProductService {
             }
         }
     }
+
     private Cart createCart(Customer customer) {
         Cart cart = new Cart();
         cart.setCustomer(customer);

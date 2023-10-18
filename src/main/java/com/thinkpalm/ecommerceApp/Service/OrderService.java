@@ -38,7 +38,6 @@ public class OrderService {
         address.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
         address.setCustomer(currentCustomer);
         addressRepo.save(address);
-
         Order order = new Order();
         order.setAddress(address);
         order.setStatus(orderRequest.getOrderStatus());

@@ -31,6 +31,4 @@ public class LogoutService implements LogoutHandler {
             tokenRepo.save(storedToken);
         }
     }
-
-
 }

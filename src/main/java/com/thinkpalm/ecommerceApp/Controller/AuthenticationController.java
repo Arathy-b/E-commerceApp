@@ -23,12 +23,12 @@ public class AuthenticationController {
     public ResponseEntity<String> login(@RequestBody LoginRequest request){
          return ResponseEntity.ok(authService.login(request));
     }
-
-    @GetMapping("/hai")
-    public ResponseEntity<String> helo(){
-
-        return ResponseEntity.ok("hello");
-    }
+//
+//    @GetMapping("/hai")
+//    public ResponseEntity<String> helo(){
+//
+//        return ResponseEntity.ok("hello");
+//    }
 
 
 
