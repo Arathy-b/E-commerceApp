@@ -66,9 +66,4 @@ public class AdminController {
         Product updateProduct=adminService.updateProduct(productId,newproduct);
         return  updateProduct;
     }
-
-
-
-
-
 }

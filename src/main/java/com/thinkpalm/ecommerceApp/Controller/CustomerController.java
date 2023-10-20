@@ -1,8 +1,12 @@
 package com.thinkpalm.ecommerceApp.Controller;
 
+import com.thinkpalm.ecommerceApp.Model.Customer;
 import com.thinkpalm.ecommerceApp.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;

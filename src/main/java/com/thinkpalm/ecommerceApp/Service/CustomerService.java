@@ -7,6 +7,7 @@ import com.thinkpalm.ecommerceApp.Repository.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,9 @@ public class CustomerService {
     private CustomerRepo customerRepo;
     @Autowired
     private AddressRepo addressRepo;
+
+
+
     public Map<String, Object> getCustomerDetails() {
         Optional<Customer> cust = customerRepo.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Map<String,Object> res = new HashMap<>();
