@@ -1,5 +1,9 @@
 package com.thinkpalm.ecommerceApp.Model;
 
+import com.thinkpalm.ecommerceApp.Validator.EmailValid;
+import com.thinkpalm.ecommerceApp.Validator.NameValid;
+import com.thinkpalm.ecommerceApp.Validator.PasswordValid;
+import com.thinkpalm.ecommerceApp.Validator.PhoneNumbervalid;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -26,20 +30,17 @@ public class Customer implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-@NotNull(message = "Username cannot be empty")
-@NotEmpty
+@NameValid
     private String name;
 
     @Column(unique = true, nullable = false)
-@NotNull
-    @Email(message = "please provide a valid email id")
+    @EmailValid
     private  String email;
-@Size(min=6,max = 15)
-@NotNull(message = "password must contain atleast 6 characters")
 
+@PasswordValid
     private String password;
 
-@Pattern(regexp = "^[0-9]{10}$", message = "Invalid phone number format. Please provide a 10-digit integer phone number.")
+@PhoneNumbervalid
 
     private String phone_number;
 

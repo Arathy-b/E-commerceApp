@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -27,30 +26,31 @@ public class AuthService {
     private final JwtService jSer;
     private final AuthenticationManager authenticationManager;
     private final TokenRepo tokenRepo;
-
     public String register(Customer userdetails){
         try{
-
-            Optional<Role> role = roleRepo.findById(2);
-            var customer= Customer.builder()
-                    .name(userdetails.getName())
-                    .email(userdetails.getEmail())
-                    .phone_number(userdetails.getPhone_number())
-                    .password(passEncode.encode(userdetails.getPassword()))
-                    .created_at(Timestamp.valueOf(LocalDateTime.now()))
-                    .build();
-            customer.setRole(role.get());
-            urep.save(customer);
-            var jwtToken=jSer.generateToken(customer);
-            revokedAllUserTokens(customer);
-            saveUserToken(customer,jwtToken);
-            return jwtToken;
+            if(urep.isDuplicateExists(userdetails.getName(),userdetails.getEmail(),userdetails.getPhone_number()).isEmpty()){
+                Optional<Role> role = roleRepo.findById(2);
+                var customer= Customer.builder()
+                        .name(userdetails.getName())
+                        .email(userdetails.getEmail().toLowerCase())
+                        .phone_number(userdetails.getPhone_number())
+                        .password(passEncode.encode(userdetails.getPassword()))
+                        .created_at(Timestamp.valueOf(LocalDateTime.now()))
+                        .build();
+                customer.setRole(role.get());
+                urep.save(customer);
+                var jwtToken=jSer.generateToken(customer);
+                revokedAllUserTokens(customer);
+                saveUserToken(customer,jwtToken);
+                return "Registration successful";
+            }else {
+                return "duplicate entry!";
+            }
         }
         catch (Exception e){
             return "Registration Unsuccessful";
         }
     }
-
     public String login(LoginRequest request){
         try{
             authenticationManager.authenticate(
@@ -58,9 +58,7 @@ public class AuthService {
                             request.getEmail(),
                             request.getPassword()
                     )
-
             );
-
             Customer customer=urep.findByEmail(request.getEmail())
                     .orElseThrow();
             var jwtToken=jSer.generateToken(customer);
@@ -92,5 +90,4 @@ public class AuthService {
                 .build();
         tokenRepo.save(token);
     }
-
 }
