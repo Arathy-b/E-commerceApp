@@ -1,7 +1,8 @@
 package com.thinkpalm.ecommerceApp.Model;
 
-import com.sun.istack.internal.NotNull;
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.awt.*;
 import java.sql.Timestamp;
@@ -16,10 +17,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     @Column
-    @NotNull
+    @jakarta.validation.constraints.NotNull
     private String title;
     @Column
     @NotNull
+
     private String description;
 
     @Column

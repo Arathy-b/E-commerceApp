@@ -19,9 +19,7 @@ public class CustomerService {
     private CustomerRepo customerRepo;
     @Autowired
     private AddressRepo addressRepo;
-
-
-
+    
     public Map<String, Object> getCustomerDetails() {
         Optional<Customer> cust = customerRepo.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Map<String,Object> res = new HashMap<>();

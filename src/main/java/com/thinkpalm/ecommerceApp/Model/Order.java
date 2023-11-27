@@ -1,7 +1,7 @@
 package com.thinkpalm.ecommerceApp.Model;
 
-import com.sun.istack.internal.NotNull;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -13,36 +13,26 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
-
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-
     private float totalPrice;
-
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     private Timestamp order_date;
 
-
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
 
-
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
-
-
-
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }

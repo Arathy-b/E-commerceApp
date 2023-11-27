@@ -48,7 +48,6 @@ public class Customer implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp created_at;
 
-
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp modified_at;
 
@@ -60,25 +59,21 @@ public class Customer implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {;
         return role.getRoleName().getAuthorities();
     }
-
     @Override
     public String getUsername() {
 
         return email;
     }
-
     @Override
     public String getPassword() {
 
         return password;
     }
-
     @Override
     public boolean isAccountNonExpired() {
 
         return true;
     }
-
     @Override
     public boolean isAccountNonLocked() {
         return true;

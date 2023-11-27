@@ -1,12 +1,13 @@
 package com.thinkpalm.ecommerceApp.Configuration;
 
-import com.sun.istack.internal.NotNull;
 import com.thinkpalm.ecommerceApp.Repository.TokenRepo;
 import com.thinkpalm.ecommerceApp.Service.JwtService;
+import com.thinkpalm.ecommerceApp.Util.AppContext;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotNull;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
     @Override
     protected void doFilterInternal(
-          @NotNull HttpServletRequest request,
-          @NotNull HttpServletResponse response,
+          @jakarta.validation.constraints.NotNull HttpServletRequest request,
+          @jakarta.validation.constraints.NotNull HttpServletResponse response,
           @NotNull FilterChain filterChain
     )
             throws ServletException, IOException {
@@ -67,6 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                AppContext.setEmail(userEmail);
             }
         }
         filterChain.doFilter(request,response);

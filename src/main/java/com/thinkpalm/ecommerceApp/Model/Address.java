@@ -1,7 +1,7 @@
 package com.thinkpalm.ecommerceApp.Model;
 
-import com.sun.istack.internal.NotNull;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

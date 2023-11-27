@@ -1,8 +1,8 @@
 package com.thinkpalm.ecommerceApp.Model;
 
 
-import com.sun.istack.internal.NotNull;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("api/v1/auth")
 public class AuthenticationController {
@@ -37,12 +39,12 @@ public class AuthenticationController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody Customer customer){
+    public ResponseEntity<Map<String,Object>> register(@Valid @RequestBody Customer customer){
         return ResponseEntity.ok(authService.register(customer));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request){
+    public ResponseEntity<Map<String,Object>> login(@RequestBody LoginRequest request){
          return ResponseEntity.ok(authService.login(request));
     }
 

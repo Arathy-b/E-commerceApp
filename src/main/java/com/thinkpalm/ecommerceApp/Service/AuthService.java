@@ -15,6 +15,8 @@ import org.springframework.validation.annotation.Validated;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,8 @@ public class AuthService {
     private final JwtService jSer;
     private final AuthenticationManager authenticationManager;
     private final TokenRepo tokenRepo;
-    public String register(Customer userdetails){
+    public Map<String,Object> register(Customer userdetails){
+        Map<String,Object> res=new HashMap<>();
         try{
             if(urep.isDuplicateExists(userdetails.getName(),userdetails.getEmail(),userdetails.getPhone_number()).isEmpty()){
                 Optional<Role> role = roleRepo.findById(2);
@@ -42,16 +45,23 @@ public class AuthService {
                 var jwtToken=jSer.generateToken(customer);
                 revokedAllUserTokens(customer);
                 saveUserToken(customer,jwtToken);
-                return "Registration successful";
+                res.put("response",jwtToken);
+                res.put("status",true);
+                return res;
             }else {
-                return "duplicate entry!";
+                res.put("response","Duplicate Entry");
+                res.put("status",false);
+                return res;
             }
         }
         catch (Exception e){
-            return "Registration Unsuccessful";
+            res.put("response","Registration unsuccesfull");
+            res.put("status",false);
+            return res;
         }
     }
-    public String login(LoginRequest request){
+    public Map<String,Object> login(LoginRequest request){
+        Map<String,Object> res=new HashMap<>();
         try{
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -64,10 +74,15 @@ public class AuthService {
             var jwtToken=jSer.generateToken(customer);
             revokedAllUserTokens(customer);
             saveUserToken(customer,jwtToken);
-            return jwtToken;
+
+            res.put("response",jwtToken);
+            res.put("status",true);
+            return res;
         }
         catch (Exception e){
-            return  "Invalid email/password!";
+            res.put("response","Invalid email/password");
+            res.put("status",false);
+            return res;
         }
     }
     private  void revokedAllUserTokens(Customer customer){
