@@ -41,7 +41,7 @@ public class AdminController {
     }
 
     @PostMapping("/createProduct")
-    public String createProducts(@RequestBody CreateProductRequest request){
+    public Product createProducts(@RequestBody CreateProductRequest request){
         return adminService.createProducts(request);
     }
 

@@ -27,7 +27,7 @@ public class AdminService {
         categoryRepo.save(category);
         return "category created";
     }
-    public String createProducts(CreateProductRequest createProductRequest) {
+    public Product createProducts(CreateProductRequest createProductRequest) {
         Optional<Category>cat = categoryRepo.findById(createProductRequest.getCategory_id());
         Product product=new Product();
         product.setTitle(createProductRequest.getTitle());
@@ -38,7 +38,7 @@ public class AdminService {
         product.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
 
         productRepo.save(product);
-        return "product created";
+        return product;
     }
     public void deleteProduct(Integer productId) {
         productRepo.deleteById(productId);

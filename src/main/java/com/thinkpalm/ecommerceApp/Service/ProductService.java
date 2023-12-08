@@ -105,4 +105,8 @@ public class ProductService {
         List<Product>findByCategory=this.productRepo.findByCategory(cat);
         return findByCategory;
     }
+
+    public List<Product> getTrendingProducts() {
+        return productRepo.getTrending();
+    }
 }

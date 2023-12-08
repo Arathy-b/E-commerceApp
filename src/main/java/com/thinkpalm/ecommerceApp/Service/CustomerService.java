@@ -26,6 +26,7 @@ public class CustomerService {
         res.put("name",cust.get().getName());
         res.put("email",cust.get().getEmail());
         res.put("phone_number",cust.get().getPhone_number());
+        res.put("role",cust.get().getRole());
         List<Address> address = addressRepo.findByCustId(cust.get().getId());
         for(Address add:address){
             add.setCustomer(null);

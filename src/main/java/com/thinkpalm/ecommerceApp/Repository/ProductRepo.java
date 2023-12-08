@@ -13,4 +13,10 @@ public interface ProductRepo extends JpaRepository<Product,Integer> {
     List<Map<String,Object>> getAllCartProducts(Integer cart_id);
 
     List<Product> findByCategory(Category category);
+
+    @Query(value = "SELECT * FROM ecommercedb.product\n" +
+            "ORDER BY RAND()\n" +
+            "LIMIT 4;",nativeQuery = true)
+    List<Product> getTrending();
+
 }

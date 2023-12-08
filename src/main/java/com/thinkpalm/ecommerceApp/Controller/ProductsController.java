@@ -29,6 +29,10 @@ public class ProductsController {
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
+    @GetMapping("/trending")
+    public List<Product> getTrendingProducts() {
+        return productService.getTrendingProducts();
+    }
     @GetMapping("/View/{productId}")
     public Product viewProductById(@PathVariable Integer productId){
         Product product1= productService.viewProductById(productId);
