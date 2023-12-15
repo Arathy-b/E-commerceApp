@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +44,10 @@ public class ProductService {
     public  Product viewProductById(Integer productId){
         Product prod=productRepo.findById(productId).orElse(null);
         return prod;
+    }
+
+    public List<Map<String,Object>>findTrendingProductsByCategory(Integer catId){
+        return catRepo.findTrendingProductsByCategory(catId);
     }
     public String getImageRelativePath(Integer postId) {
         return "/Users/arathy.h/Downloads/ecommerce-website";

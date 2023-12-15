@@ -43,6 +43,10 @@ public class ProductsController {
         List<Product>findProductByCategory=this.productService.findProductByCategory(catId);
         return new ResponseEntity<List<Product>>(findProductByCategory, HttpStatus.ACCEPTED);
     }
+    @GetMapping("/trend/{catId}")
+    public ResponseEntity<List<Map<String,Object>>>getTrendingProductsByCategory(@PathVariable Integer catId){
+        return new ResponseEntity<List<Map<String,Object>>>(productService.findTrendingProductsByCategory(catId),HttpStatus.ACCEPTED);
+    }
     @GetMapping(path = "/getImage/{productId}")
     public ResponseEntity<String> getImageRelativePath(@PathVariable Integer productId) {
         String relativePath = productService.getImageRelativePath(productId);
@@ -53,8 +57,6 @@ public class ProductsController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 //CRUD OPERATIONS IN CART
 
     @PostMapping("/addProductToCart/{prodId}")
@@ -76,6 +78,5 @@ public class ProductsController {
         productService.removeProductFromCart(cartId,productId);
         return ResponseEntity.ok("Product removed successfully");
     }
-
-
+    
 }
