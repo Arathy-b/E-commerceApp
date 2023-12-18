@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf->csrf.disable())
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("api/v1/auth/**").permitAll()
+                        .requestMatchers("api/v1/auth/**","image/view/**").permitAll()
                         .requestMatchers("api/v1/admin/**").hasRole(ADMIN.name())
                         .requestMatchers(GET,"api/v1/admin/**").hasAuthority(ADMIN_READ.name())
                         .requestMatchers(POST,"api/v1/admin/**").hasAuthority(ADMIN_CREATE.name())

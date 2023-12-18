@@ -1,4 +1,5 @@
 package com.thinkpalm.ecommerceApp.Controller;
+import com.thinkpalm.ecommerceApp.Model.Category;
 import com.thinkpalm.ecommerceApp.Model.CreateProductRequest;
 import com.thinkpalm.ecommerceApp.Model.Product;
 import com.thinkpalm.ecommerceApp.Model.QuantityRequest;
@@ -37,6 +38,9 @@ public class ProductsController {
     public Product viewProductById(@PathVariable Integer productId){
         Product product1= productService.viewProductById(productId);
         return  product1;
+    }@GetMapping("/listCategory")
+    public ResponseEntity<List<Category>> listCategory(){
+        return new ResponseEntity<List<Category>>(productService.listCategory(), HttpStatus.OK);
     }
     @GetMapping("/category/{catId}")
     public ResponseEntity<List<Product>>getProductByCategory(@PathVariable Integer catId){
@@ -60,13 +64,13 @@ public class ProductsController {
 //CRUD OPERATIONS IN CART
 
     @PostMapping("/addProductToCart/{prodId}")
-    public ResponseEntity<String> addProductToCart(@PathVariable Integer prodId,@RequestBody Map<String,Integer> quantity)
+    public ResponseEntity<String> addProductToCart(@PathVariable Integer prodId)
     {
-        return ResponseEntity.ok(productService.addProductToCart(prodId,quantity.get("quantity")));
+        return ResponseEntity.ok(productService.addProductToCart(prodId));
     }
-    @GetMapping("/{cartId}/products")
-    public ResponseEntity<List<Map<String,Object>>> getProductsInCart(@PathVariable Integer cartId) {
-        return ResponseEntity.ok(productService.getProductsInCart(cartId));
+    @GetMapping("/cart")
+    public ResponseEntity<List<Map<String,Object>>> getProductsInCart() {
+        return ResponseEntity.ok(productService.getProductsInCart());
     }
     @PutMapping("/updateQuantity")
     public ResponseEntity<String> updateProductQuantityInCart(@RequestBody QuantityRequest quantityRequest) {
@@ -76,7 +80,7 @@ public class ProductsController {
     @DeleteMapping("/delete/{cartId}/{productId}")
     public ResponseEntity<String> deleteCart(@PathVariable Integer cartId,@PathVariable Integer productId ) {
         productService.removeProductFromCart(cartId,productId);
-        return ResponseEntity.ok("Product removed successfully");
+        return ResponseEntity.ok("successfully");
     }
-    
+
 }

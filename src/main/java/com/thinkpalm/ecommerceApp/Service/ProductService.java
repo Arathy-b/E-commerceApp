@@ -55,7 +55,7 @@ public class ProductService {
 
 
     //OPERATIONS IN CART
-    public String addProductToCart(Integer prodId,Integer quantity) {
+    public String addProductToCart(Integer prodId) {
         Customer customer = customerRepo.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
         Cart custCart = cartRepo.findByCustId(customer.getId());
         if (custCart == null) {
@@ -65,7 +65,7 @@ public class ProductService {
                 CartProduct cartProduct = new CartProduct();
                 cartProduct.setCart(newCart);
                 cartProduct.setProduct(product);
-                cartProduct.setQuantity(quantity);
+                cartProduct.setQuantity(1);
                 cartProduct.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
                 cartProductRepo.save(cartProduct);
                 return "successfull";
@@ -78,7 +78,7 @@ public class ProductService {
                 CartProduct cartProduct = new CartProduct();
                 cartProduct.setCart(custCart);
                 cartProduct.setProduct(product);
-                cartProduct.setQuantity(quantity);
+                cartProduct.setQuantity(1);
                 cartProduct.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
                 cartProductRepo.save(cartProduct);
                 return "successfull";
@@ -95,8 +95,9 @@ public class ProductService {
         cartRepo.save(cart);
         return cart;
     }
-    public List<Map<String, Object>> getProductsInCart(Integer cartId) {
-        List<Map<String, Object>> res = productRepo.getAllCartProducts(cartId);
+    public List<Map<String, Object>> getProductsInCart() {
+        Customer customer = customerRepo.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
+        List<Map<String, Object>> res = productRepo.getAllCartProducts(customer.getId());
         return res;
     }
     public void removeProductFromCart(Integer cartId, Integer productId) {
@@ -113,5 +114,9 @@ public class ProductService {
 
     public List<Product> getTrendingProducts() {
         return productRepo.getTrending();
+    }
+
+    public List<Category> listCategory() {
+        return catRepo.findAll();
     }
 }
