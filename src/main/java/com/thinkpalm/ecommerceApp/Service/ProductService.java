@@ -24,31 +24,33 @@ public class ProductService {
     private final CartProductRepo cartProductRepo;
     private final CustomerRepo customerRepo;
     private final CategoryRepo catRepo;
+
     @Autowired
     public ProductService(ProductRepo productRepo,
                           CartRepo cartRepo,
                           CartProductRepo cartProductRepo,
                           CustomerRepo customerRepo,
-                          CategoryRepo catRepo)
-    {
+                          CategoryRepo catRepo) {
         this.productRepo = productRepo;
         this.cartRepo = cartRepo;
         this.cartProductRepo = cartProductRepo;
         this.customerRepo = customerRepo;
-        this.catRepo=catRepo;
+        this.catRepo = catRepo;
     }
 
     public List<Product> getAllProducts() {
         return productRepo.findAll();
     }
-    public  Product viewProductById(Integer productId){
-        Product prod=productRepo.findById(productId).orElse(null);
+
+    public Product viewProductById(Integer productId) {
+        Product prod = productRepo.findById(productId).orElse(null);
         return prod;
     }
 
-    public List<Map<String,Object>>findTrendingProductsByCategory(Integer catId){
+    public List<Map<String, Object>> findTrendingProductsByCategory(Integer catId) {
         return catRepo.findTrendingProductsByCategory(catId);
     }
+
     public String getImageRelativePath(Integer postId) {
         return "/Users/arathy.h/Downloads/ecommerce-website";
     }
@@ -95,20 +97,24 @@ public class ProductService {
         cartRepo.save(cart);
         return cart;
     }
+
     public List<Map<String, Object>> getProductsInCart() {
         Customer customer = customerRepo.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
         List<Map<String, Object>> res = productRepo.getAllCartProducts(customer.getId());
         return res;
     }
+
     public void removeProductFromCart(Integer cartId, Integer productId) {
         cartProductRepo.deleteByCartIdAndProductId(cartId, productId);
     }
+
     public void updateProductQuantityInCart(Integer cartId, Integer productId, int newQuantity) {
         cartProductRepo.updateQuantityByCartIdAndProductId(cartId, productId, newQuantity);
     }
-    public List<Product>findProductByCategory(Integer catId){
-        Category cat=this.catRepo.findById(catId).orElseThrow();
-        List<Product>findByCategory=this.productRepo.findByCategory(cat);
+
+    public List<Product> findProductByCategory(Integer catId) {
+        Category cat = this.catRepo.findById(catId).orElseThrow();
+        List<Product> findByCategory = this.productRepo.findByCategory(cat);
         return findByCategory;
     }
 
@@ -120,3 +126,4 @@ public class ProductService {
         return catRepo.findAll();
     }
 }
+

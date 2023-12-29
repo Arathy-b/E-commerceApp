@@ -40,9 +40,17 @@ public class AdminController {
         return adminService.createCategory(data);
     }
 
+    @GetMapping("/listCategory")
+    public List<Category> listCategory(){
+        return adminService.listCategory();
+    }
     @PostMapping("/createProduct")
     public Product createProducts(@RequestBody CreateProductRequest request){
         return adminService.createProducts(request);
+    }
+    @GetMapping("/listProducts")
+    public List<Product> listAllProducts() {
+        return adminService.listAllProducts();
     }
 
     @PostMapping(path = "/uploadImage/{productId}")
@@ -66,4 +74,6 @@ public class AdminController {
         Product updateProduct=adminService.updateProduct(productId,newproduct);
         return  updateProduct;
     }
+
+
 }

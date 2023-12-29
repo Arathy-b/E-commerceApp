@@ -27,6 +27,10 @@ public class AdminService {
         categoryRepo.save(category);
         return "category created";
     }
+
+    public List<Product> listAllProducts() {
+        return productRepo.findAll();
+    }
     public Product createProducts(CreateProductRequest createProductRequest) {
         Optional<Category>cat = categoryRepo.findById(createProductRequest.getCategory_id());
         Product product=new Product();
@@ -43,6 +47,8 @@ public class AdminService {
     public void deleteProduct(Integer productId) {
         productRepo.deleteById(productId);
     }
+
+  
     public Product updateProduct(Integer productId,CreateProductRequest newproduct) {
         Product oldProduct=productRepo.findById(productId).orElse(null);
         oldProduct.setImage(newproduct.getImage()!=null ?  newproduct.getImage() : oldProduct.getImage());
@@ -58,5 +64,9 @@ public class AdminService {
         oldProduct.setModified_at(Timestamp.valueOf(LocalDateTime.now()));
         Product save=productRepo.save(oldProduct);
         return  save;
+    }
+
+    public List<Category> listCategory() {
+        return categoryRepo.findAll();
     }
 }

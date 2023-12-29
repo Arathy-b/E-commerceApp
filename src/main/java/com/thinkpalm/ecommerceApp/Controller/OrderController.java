@@ -38,5 +38,10 @@ public ResponseEntity<Order> linkAddress(@PathVariable Integer orderId,@PathVari
         return orderOptional.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    @GetMapping("/createTransaction/{amount}")
+    public TransactionDetails createTransaction(@PathVariable(name="amount") Double amount){
+        return orderService.createTransaction(amount);
+
+    }
 
 }

@@ -72,7 +72,7 @@ public class ProductsController {
     public ResponseEntity<List<Map<String,Object>>> getProductsInCart() {
         return ResponseEntity.ok(productService.getProductsInCart());
     }
-    @PutMapping("/updateQuantity")
+    @PostMapping("/updateQuantity")
     public ResponseEntity<String> updateProductQuantityInCart(@RequestBody QuantityRequest quantityRequest) {
         productService.updateProductQuantityInCart(quantityRequest.getCartId(), quantityRequest.getProductId(), quantityRequest.getNewQuantity());
         return ResponseEntity.ok("Product quantity updated successfully");

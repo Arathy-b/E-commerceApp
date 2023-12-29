@@ -36,8 +36,6 @@ public class AuthenticationController {
 //    public ResponseEntity<?> handleValidationException(MethodArgumentNotValidException ex) {
 //        return ResponseEntity.badRequest().body("Validation errors occurred.");
 //    }
-
-
     @PostMapping("/register")
     public ResponseEntity<Map<String,Object>> register(@Valid @RequestBody Customer customer){
         return ResponseEntity.ok(authService.register(customer));

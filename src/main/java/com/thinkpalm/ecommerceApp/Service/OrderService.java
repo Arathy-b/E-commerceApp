@@ -1,7 +1,9 @@
 package com.thinkpalm.ecommerceApp.Service;
 
+import com.razorpay.RazorpayClient;
 import com.thinkpalm.ecommerceApp.Model.*;
 import com.thinkpalm.ecommerceApp.Repository.*;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ import java.util.List;
 import java.util.Optional;
 @Service
 public class  OrderService {
+    private static final String KEY="rzp_test_FM8wL0vEVG1t6x";
+    private static final String KEY_SECRET="aBtvO7hnS8EGrplNWDasI9Ag";
+    private static final String currency="INR";
     @Autowired
     private OrderRepo orderRepo;
     @Autowired
@@ -68,4 +73,36 @@ public class  OrderService {
 //        optionalOrder.ifPresent(order -> order.getOrderItems().size());
         return optionalOrder;
     }
+    public TransactionDetails createTransaction(Double amount) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("amount", (amount * 100));
+            jsonObject.put("currency", currency);
+
+            RazorpayClient razorpayClient = new RazorpayClient(KEY, KEY_SECRET);
+            com.razorpay.Order order = razorpayClient.orders.create(jsonObject);
+
+            TransactionDetails transactionDetails= prepareTransactionDetails(order);
+            return transactionDetails;
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    private TransactionDetails prepareTransactionDetails(com.razorpay.Order order){
+        String orderId=order.get("id");
+        String currency=order.get("currency");
+        Integer amount=order.get("amount");
+
+        TransactionDetails transactionDetails=new TransactionDetails(orderId,currency,amount);
+        return transactionDetails;
+
+
+
+
+
+    }
+
 }
