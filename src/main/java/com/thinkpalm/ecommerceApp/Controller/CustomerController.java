@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,6 +23,7 @@ public class CustomerController {
     public Map<String,Object>  getCustomerDetails(){
         return customerService.getCustomerDetails();
     }
+
 
     @DeleteMapping("/delete/{custId}")
     public ResponseEntity<String> deleteAccount(@PathVariable Integer custId){

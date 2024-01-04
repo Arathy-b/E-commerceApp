@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,6 +20,12 @@ public class AdminService {
     private ProductRepo productRepo;
     @Autowired
     private  CategoryRepo catRepo;
+
+    @Autowired
+    private CustomerRepo customerRepo;
+
+    @Autowired
+    private OrderRepo orderRepo;
 
     public String createCategory(Map<String,Object> data) {
         Category category = new Category();
@@ -69,4 +76,21 @@ public class AdminService {
     public List<Category> listCategory() {
         return categoryRepo.findAll();
     }
+
+    public List<Customer> getAllCustomers(){
+        return customerRepo.listAllCustomers();
+    }
+
+    public List<Map<String,Object>> getAllOrderDetails() {
+        List<Map<String,Object>> orderDetails = orderRepo.getAllOrders();
+
+        return orderDetails;
+    }
+
+
+
+
+
+
+
 }

@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -29,7 +30,7 @@ public ResponseEntity<Order> linkAddress(@PathVariable Integer orderId,@PathVari
     @PostMapping("/placeOrder")
     public ResponseEntity<Order> placeOrder(@RequestBody OrderRequest orderRequest) {
         Order order = orderService.placeOrder(orderRequest);
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        return new ResponseEntity<Order>(order, HttpStatus.OK);
     }
 
     @GetMapping("/{orderId}")
@@ -38,9 +39,13 @@ public ResponseEntity<Order> linkAddress(@PathVariable Integer orderId,@PathVari
         return orderOptional.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    @GetMapping("/createTransaction/{amount}")
-    public TransactionDetails createTransaction(@PathVariable(name="amount") Double amount){
-        return orderService.createTransaction(amount);
+    @GetMapping("/list")
+    public ResponseEntity<List<Map<String, Object>>> getAllDetails() {
+        return new ResponseEntity<List<Map<String, Object>>>(orderService.getAllDetails(),HttpStatus.OK);
+    }
+    @GetMapping("/createTransaction/{totalPrice}")
+    public TransactionDetails createTransaction(@PathVariable(name="totalPrice") Integer totalPrice){
+        return orderService.createTransaction(totalPrice);
 
     }
 

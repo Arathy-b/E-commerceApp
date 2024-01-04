@@ -8,6 +8,7 @@ public class OrderRequest{
     private Address address;
     private List<OrderItem> orderItem;
     private OrderStatus orderStatus;
+    private String transactionId;
 
     public OrderStatus getOrderStatus() {
         return orderStatus;
@@ -23,6 +24,14 @@ public class OrderRequest{
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 
     public List<OrderItem> getOrderItem() {

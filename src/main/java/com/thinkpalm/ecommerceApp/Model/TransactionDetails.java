@@ -10,5 +10,6 @@ import lombok.Setter;
 public class TransactionDetails {
     private String orderId;
     private String currency;
-    private Integer amount;
+    private Integer totalPrice;
+    private String key;
 }

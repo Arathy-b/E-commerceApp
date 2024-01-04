@@ -1,5 +1,7 @@
 package com.thinkpalm.ecommerceApp.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import com.thinkpalm.ecommerceApp.Model.Order;
 
@@ -18,6 +20,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 
 

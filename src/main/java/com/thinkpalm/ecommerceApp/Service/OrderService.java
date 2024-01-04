@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 @Service
 public class  OrderService {
@@ -51,12 +52,14 @@ public class  OrderService {
         for(OrderItem orderItem : orderRequest.getOrderItem()){
             Product product=productRepo.findById(orderItem.getProductId()).orElse(null);
             orderItem.setPrice(product.getPrice());
-            totalPrice = totalPrice+orderItem.getPrice();
+            totalPrice = totalPrice+ (orderItem.getPrice()* orderItem.getQuantity());
+            orderItem.setOrder(order);
         }
         order.setTotalPrice(totalPrice);
         order.setOrder_date(Timestamp.valueOf(LocalDateTime.now()));
         order.setOrderItems(orderRequest.getOrderItem());
         orderRepo.save(order);
+
         return order;
     }
 
@@ -73,10 +76,10 @@ public class  OrderService {
 //        optionalOrder.ifPresent(order -> order.getOrderItems().size());
         return optionalOrder;
     }
-    public TransactionDetails createTransaction(Double amount) {
+    public TransactionDetails createTransaction(Integer totalPrice) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("amount", (amount * 100));
+            jsonObject.put("amount", (totalPrice * 100));
             jsonObject.put("currency", currency);
 
             RazorpayClient razorpayClient = new RazorpayClient(KEY, KEY_SECRET);
@@ -94,9 +97,10 @@ public class  OrderService {
     private TransactionDetails prepareTransactionDetails(com.razorpay.Order order){
         String orderId=order.get("id");
         String currency=order.get("currency");
-        Integer amount=order.get("amount");
+        Integer totalPrice=order.get("amount");
 
-        TransactionDetails transactionDetails=new TransactionDetails(orderId,currency,amount);
+
+        TransactionDetails transactionDetails=new TransactionDetails(orderId,currency,totalPrice,KEY);
         return transactionDetails;
 
 
@@ -104,5 +108,10 @@ public class  OrderService {
 
 
     }
+
+    public List<Map<String, Object>> getAllDetails() {
+        return new ArrayList<>();
+    }
+
 
 }

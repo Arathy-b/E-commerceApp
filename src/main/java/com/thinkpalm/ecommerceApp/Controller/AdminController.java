@@ -1,14 +1,11 @@
 package com.thinkpalm.ecommerceApp.Controller;
 
 
-import com.thinkpalm.ecommerceApp.Model.Category;
-import com.thinkpalm.ecommerceApp.Model.CreateProductRequest;
-import com.thinkpalm.ecommerceApp.Model.Product;
+import com.thinkpalm.ecommerceApp.Model.*;
 import com.thinkpalm.ecommerceApp.Repository.CategoryRepo;
+import com.thinkpalm.ecommerceApp.Repository.OrderRepo;
 import com.thinkpalm.ecommerceApp.Repository.ProductRepo;
-import com.thinkpalm.ecommerceApp.Service.AdminService;
-import com.thinkpalm.ecommerceApp.Service.FileUpload;
-import com.thinkpalm.ecommerceApp.Service.ProductService;
+import com.thinkpalm.ecommerceApp.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +28,10 @@ public class AdminController {
     private  ProductRepo productRepo;
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CustomerService customerService;
+
     @Autowired
     private  FileUpload fileUpload;
 
@@ -75,5 +76,14 @@ public class AdminController {
         return  updateProduct;
     }
 
+    @GetMapping("/getAllCustomers")
+    public List<Customer> getAllCustomers(){
+        return adminService.getAllCustomers();
+    }
+
+    @GetMapping({"/getAllOrderDetails"})
+    public List<Map<String,Object>> getAllOrderDetails() {
+        return adminService.getAllOrderDetails();
+    }
 
 }

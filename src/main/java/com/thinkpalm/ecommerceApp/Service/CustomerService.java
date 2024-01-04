@@ -34,6 +34,8 @@ public class CustomerService {
         res.put("address",address);
         return res;
     }
+
+
     public void deleteAccount(Integer custId) {
         customerRepo.deleteById(custId);
     }
