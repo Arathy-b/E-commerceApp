@@ -23,6 +23,10 @@ public class CustomerController {
     public Map<String,Object>  getCustomerDetails(){
         return customerService.getCustomerDetails();
     }
+    @GetMapping("/getCustomer/{custId}")
+    public Customer  getCustomerDetails(@PathVariable Integer custId){
+        return customerService.getCustById(custId);
+    }
 
 
     @DeleteMapping("/delete/{custId}")

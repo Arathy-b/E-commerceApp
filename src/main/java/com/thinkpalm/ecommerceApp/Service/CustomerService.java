@@ -39,4 +39,8 @@ public class CustomerService {
     public void deleteAccount(Integer custId) {
         customerRepo.deleteById(custId);
     }
+
+    public Customer getCustById(Integer custId) {
+        return customerRepo.findById(custId).orElse(null);
+    }
 }

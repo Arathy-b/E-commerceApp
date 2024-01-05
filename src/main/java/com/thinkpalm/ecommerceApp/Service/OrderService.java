@@ -3,6 +3,7 @@ package com.thinkpalm.ecommerceApp.Service;
 import com.razorpay.RazorpayClient;
 import com.thinkpalm.ecommerceApp.Model.*;
 import com.thinkpalm.ecommerceApp.Repository.*;
+import com.thinkpalm.ecommerceApp.Util.AppContext;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -71,8 +72,8 @@ public class  OrderService {
 ////            orderItem1.setOrder(order);
 //            orderItemRepo.save(orderItem1);
 //        }
-    public Optional<Order> getOrderDetails(Integer orderId) {
-        Optional<Order> optionalOrder = orderRepo.findById(orderId);
+    public List<Map<String,Object>> getOrderDetails(Integer orderId) {
+        List<Map<String,Object>> optionalOrder = orderRepo.getOrdersDetails(orderId);
 //        optionalOrder.ifPresent(order -> order.getOrderItems().size());
         return optionalOrder;
     }
@@ -114,4 +115,7 @@ public class  OrderService {
     }
 
 
+    public List<Map<String,Object>> getAllOrders(Integer custId) {
+        return orderRepo.getCustomerOrders(custId);
+    }
 }

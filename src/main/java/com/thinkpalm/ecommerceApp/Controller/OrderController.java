@@ -34,10 +34,13 @@ public ResponseEntity<Order> linkAddress(@PathVariable Integer orderId,@PathVari
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<Order> getOrderDetails(@PathVariable Integer orderId) {
-        Optional<Order> orderOptional = orderService.getOrderDetails(orderId);
-        return orderOptional.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public List<Map<String,Object>> getOrderDetails(@PathVariable Integer orderId) {
+        return orderService.getOrderDetails(orderId);
+    }
+
+    @GetMapping("/allOrders/{custId}")
+    public List<Map<String,Object>> getAllOrders(@PathVariable Integer custId){
+    return orderService.getAllOrders(custId);
     }
     @GetMapping("/list")
     public ResponseEntity<List<Map<String, Object>>> getAllDetails() {
