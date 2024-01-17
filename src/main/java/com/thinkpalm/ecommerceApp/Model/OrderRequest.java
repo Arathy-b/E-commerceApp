@@ -1,7 +1,13 @@
 package com.thinkpalm.ecommerceApp.Model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+
+@Getter
+@Setter
 public class OrderRequest{
 
 
@@ -9,44 +15,6 @@ public class OrderRequest{
     private List<OrderItem> orderItem;
     private OrderStatus orderStatus;
     private String transactionId;
+    private  Integer cartId;
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public List<OrderItem> getOrderItem() {
-        return orderItem;
-    }
-
-    public void setOrderItem(List<OrderItem> orderItem) {
-        this.orderItem = orderItem;
-    }
-
-//    public Integer getCartProductId() {
-//        return cartProductId;
-//    }
-//
-//    public void setCartProductId(Integer cartProductId) {
-//        this.cartProductId = cartProductId;
-//    }
 }

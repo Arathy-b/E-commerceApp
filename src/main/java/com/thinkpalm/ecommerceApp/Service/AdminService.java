@@ -38,7 +38,7 @@ public class AdminService {
     public List<Product> listAllProducts() {
         return productRepo.findAll();
     }
-    public Product createProducts(CreateProductRequest createProductRequest) {
+    public Product  createProducts(CreateProductRequest createProductRequest) {
         Optional<Category>cat = categoryRepo.findById(createProductRequest.getCategory_id());
         Product product=new Product();
         product.setTitle(createProductRequest.getTitle());
@@ -88,9 +88,20 @@ public class AdminService {
     }
 
 
-
-
-
-
-
+    public String changeOrderStatus(Integer orderId) {
+        Order order = orderRepo.findById(orderId).orElse(null);
+        if(order!=null) {
+            if (order.getStatus()==OrderStatus.PLACED){
+                order.setStatus(OrderStatus.SHIPPED);
+            } else if (order.getStatus()==OrderStatus.SHIPPED) {
+                order.setStatus(OrderStatus.DELIVERED);
+            }else{
+                return order.getStatus().toString();
+            }
+            orderRepo.save(order);
+            return order.getStatus().toString();
+        }else {
+            throw new RuntimeException();
+        }
+    }
 }

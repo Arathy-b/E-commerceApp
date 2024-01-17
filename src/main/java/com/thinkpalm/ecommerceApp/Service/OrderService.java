@@ -60,18 +60,14 @@ public class  OrderService {
         order.setOrder_date(Timestamp.valueOf(LocalDateTime.now()));
         order.setOrderItems(orderRequest.getOrderItem());
         orderRepo.save(order);
-
+        if(orderRequest.getCartId()!=null){
+            for(OrderItem orderItem : orderRequest.getOrderItem()){
+                Product product=productRepo.findById(orderItem.getProductId()).orElse(null);
+                cartProductRepo.deleteByCartIdAndProductId(orderRequest.getCartId(), product.getId());
+            }
+        }
         return order;
     }
-
-//        for(OrderItem orderItem : orderRequest.getOrderItem()){
-//            OrderItem orderItem1 = new OrderItem();
-//            orderItem1.setPrice(orderItem.getPrice());
-//            orderItem1.setQuantity(orderItem.getQuantity());
-//            orderItem1.setProductId(orderItem.getProductId());
-////            orderItem1.setOrder(order);
-//            orderItemRepo.save(orderItem1);
-//        }
     public List<Map<String,Object>> getOrderDetails(Integer orderId) {
         List<Map<String,Object>> optionalOrder = orderRepo.getOrdersDetails(orderId);
 //        optionalOrder.ifPresent(order -> order.getOrderItems().size());

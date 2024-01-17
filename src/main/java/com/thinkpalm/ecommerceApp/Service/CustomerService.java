@@ -1,8 +1,10 @@
 package com.thinkpalm.ecommerceApp.Service;
 
 import com.thinkpalm.ecommerceApp.Model.Address;
+import com.thinkpalm.ecommerceApp.Model.Cart;
 import com.thinkpalm.ecommerceApp.Model.Customer;
 import com.thinkpalm.ecommerceApp.Repository.AddressRepo;
+import com.thinkpalm.ecommerceApp.Repository.CartRepo;
 import com.thinkpalm.ecommerceApp.Repository.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,10 +21,10 @@ public class CustomerService {
     private CustomerRepo customerRepo;
     @Autowired
     private AddressRepo addressRepo;
-    
     public Map<String, Object> getCustomerDetails() {
         Optional<Customer> cust = customerRepo.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Map<String,Object> res = new HashMap<>();
+        res.put("id",cust.get().getId());
         res.put("name",cust.get().getName());
         res.put("email",cust.get().getEmail());
         res.put("phone_number",cust.get().getPhone_number());
@@ -43,4 +45,5 @@ public class CustomerService {
     public Customer getCustById(Integer custId) {
         return customerRepo.findById(custId).orElse(null);
     }
+
 }

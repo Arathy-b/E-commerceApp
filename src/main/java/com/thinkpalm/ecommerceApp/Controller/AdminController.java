@@ -49,6 +49,10 @@ public class AdminController {
     public Product createProducts(@RequestBody CreateProductRequest request){
         return adminService.createProducts(request);
     }
+    @PostMapping("/order/{orderId}/changeStatus")
+    public String changeOrderStatus(@PathVariable Integer orderId){
+        return adminService.changeOrderStatus(orderId);
+    }
     @GetMapping("/listProducts")
     public List<Product> listAllProducts() {
         return adminService.listAllProducts();

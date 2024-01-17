@@ -28,7 +28,6 @@ public class CustomerController {
         return customerService.getCustById(custId);
     }
 
-
     @DeleteMapping("/delete/{custId}")
     public ResponseEntity<String> deleteAccount(@PathVariable Integer custId){
         customerService.deleteAccount(custId);

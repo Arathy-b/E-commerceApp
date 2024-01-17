@@ -17,7 +17,7 @@ public interface OrderRepo extends JpaRepository<Order,Integer> {
             "            group by oi.order_id\n" +
             "            order by co.order_date;",nativeQuery = true)
     List<Map<String,Object>> getAllOrders();
-@Query(value = "select oi.*,a.*,c.id as custId,c.name as custName,p.title from ecommercedb.order_item as oi\n" +
+@Query(value = "select oi.*,a.*,p.*,c.id as custId,c.name as custName from ecommercedb.order_item as oi\n" +
         "\t inner join ecommercedb.product as p on p.id = oi.product_id\n" +
         "     inner join ecommercedb.cust_order as o on o.id = oi.order_id\n" +
         "     inner join ecommercedb.address as a on a.id = o.address_id\n" +
