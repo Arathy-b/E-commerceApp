@@ -46,6 +46,7 @@ public ResponseEntity<Order> linkAddress(@PathVariable Integer orderId,@PathVari
     public ResponseEntity<List<Map<String, Object>>> getAllDetails() {
         return new ResponseEntity<List<Map<String, Object>>>(orderService.getAllDetails(),HttpStatus.OK);
     }
+
     @GetMapping("/createTransaction/{totalPrice}")
     public TransactionDetails createTransaction(@PathVariable(name="totalPrice") Integer totalPrice){
         return orderService.createTransaction(totalPrice);

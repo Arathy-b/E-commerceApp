@@ -7,6 +7,7 @@ import com.thinkpalm.ecommerceApp.Repository.OrderRepo;
 import com.thinkpalm.ecommerceApp.Repository.ProductRepo;
 import com.thinkpalm.ecommerceApp.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,8 @@ public class AdminController {
 
     @Autowired
     private  FileUpload fileUpload;
+//    @Autowired
+//    private OrderService orderService;
 
 
     @PostMapping("/createCategory")
@@ -56,6 +59,11 @@ public class AdminController {
     @GetMapping("/listProducts")
     public List<Product> listAllProducts() {
         return adminService.listAllProducts();
+    }
+
+    @GetMapping("/getCount")
+    public ResponseEntity<List<Map<String,Integer>>> getCountOfAll(){
+        return new ResponseEntity<List<Map<String,Integer>>>(adminService.getCountOfAll(), HttpStatus.OK);
     }
 
     @PostMapping(path = "/uploadImage/{productId}")

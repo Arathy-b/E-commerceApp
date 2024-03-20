@@ -52,8 +52,8 @@ public class  OrderService {
         float totalPrice = 0;
         for(OrderItem orderItem : orderRequest.getOrderItem()){
             Product product=productRepo.findById(orderItem.getProductId()).orElse(null);
-            orderItem.setPrice(product.getPrice());
-            totalPrice = totalPrice+ (orderItem.getPrice()* orderItem.getQuantity());
+            orderItem.setPrice(product.getPrice() * orderItem.getQuantity());
+            totalPrice = totalPrice+ (orderItem.getPrice());
             orderItem.setOrder(order);
         }
         order.setTotalPrice(totalPrice);
@@ -73,6 +73,8 @@ public class  OrderService {
 //        optionalOrder.ifPresent(order -> order.getOrderItems().size());
         return optionalOrder;
     }
+
+
     public TransactionDetails createTransaction(Integer totalPrice) {
         try {
             JSONObject jsonObject = new JSONObject();
@@ -99,10 +101,6 @@ public class  OrderService {
 
         TransactionDetails transactionDetails=new TransactionDetails(orderId,currency,totalPrice,KEY);
         return transactionDetails;
-
-
-
-
 
     }
 

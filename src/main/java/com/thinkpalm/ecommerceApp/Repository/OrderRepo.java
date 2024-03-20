@@ -17,20 +17,19 @@ public interface OrderRepo extends JpaRepository<Order,Integer> {
             "            group by oi.order_id\n" +
             "            order by co.order_date;",nativeQuery = true)
     List<Map<String,Object>> getAllOrders();
-@Query(value = "select oi.*,a.*,p.*,c.id as custId,c.name as custName from ecommercedb.order_item as oi\n" +
-        "\t inner join ecommercedb.product as p on p.id = oi.product_id\n" +
-        "     inner join ecommercedb.cust_order as o on o.id = oi.order_id\n" +
-        "     inner join ecommercedb.address as a on a.id = o.address_id\n" +
-        "     inner join ecommercedb.customer as c on c.id = a.cust_id\n" +
-        "    where c.id = ?1 order by o.order_date desc",nativeQuery = true)
+@Query(value = "select oi.order_id,p.title,p.id as productId,oi.quantity,oi.price,a.*,c.id as custId,c.name as custName from ecommercedb.order_item as oi\n" +
+        "        inner join ecommercedb.product as p on p.id = oi.product_id\n" +
+        "        inner join ecommercedb.cust_order as o on o.id = oi.order_id\n" +
+        "        inner join ecommercedb.address as a on a.id = o.address_id\n" +
+        "        inner join ecommercedb.customer as c on c.id = a.cust_id\n" +
+        "        where c.id = ?1 order by o.order_date desc;",nativeQuery = true)
     List<Map<String,Object>> getCustomerOrders(Integer userId);
 
 @Query(value = "SELECT oi.product_id, oi.price, p.title FROM ecommercedb.order_item oi INNER JOIN ecommercedb.product p ON oi.product_id = p.id where oi.order_id = ?1",nativeQuery = true)
 List<Map<String,Object>> getOrdersDetails(Integer orderId);
 
 
-
-
-
+@Query(value = "select count(*) as count ,'product_count' as count_item from ecommercedb.product union select count(*),'category_count' as count_item from ecommercedb.category union select count(*),'customer_count' as count_item from ecommercedb.customer union select count(*),'order_item_count' as count_item from ecommercedb.order_item;",nativeQuery = true)
+    List<Map<String,Integer>> getCountOfAll();
 
 }

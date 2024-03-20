@@ -12,5 +12,8 @@ public interface CategoryRepo extends JpaRepository<Category,Integer> {
     Category findById(Category category);
     @Query(value = "SELECT * FROM ecommercedb.product where category_id=?1 ORDER BY RAND() LIMIT 4",nativeQuery = true)
     List<Map<String,Object>> findTrendingProductsByCategory(Integer catId );
+
+//    @Query(value = "SELECT COUNT(*) AS total_category_count from ecommercedb.category",nativeQuery = true);
+
 }
 

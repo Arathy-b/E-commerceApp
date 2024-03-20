@@ -87,6 +87,11 @@ public class AdminService {
         return orderDetails;
     }
 
+    public List<Map<String,Integer>> getCountOfAll(){
+        List<Map<String,Integer>> count=orderRepo.getCountOfAll();
+        return count;
+    }
+
 
     public String changeOrderStatus(Integer orderId) {
         Order order = orderRepo.findById(orderId).orElse(null);
